@@ -2,7 +2,7 @@
 const minAge = 18;
 const maxAge = 60;
 let age;
-age = [10, 17, 18, 19, 59, 60, 61, 'abrakadabra', '0', '90', '---'];
+age = [10, 17, 18, 19, 59, 60, 61, 'abrakadAbra', '0', '90', '---']; //Массив входных данных
 
 for (let i = 0; i < age.length; i++) {
     if (isNaN(age[i])) {

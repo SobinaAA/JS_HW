@@ -1,7 +1,7 @@
 "use strict";
 const minAge = 18;
 const maxAge = 60;
-let age_ask = prompt('Введите свой возраст! \n Надоест, введите "end"');
+let age_ask = prompt('Введите свой возраст! \n Надоест, введите здесь же "end"');
 while (age_ask != 'end') {
     if (isNaN(age_ask)) {
         alert('Incorrect data type');
