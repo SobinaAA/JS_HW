@@ -11,7 +11,7 @@ for (let i = 0; i < age.length; i++) {
         console.log("You don't have access cause your age is " + age[i] + " It's less then " + minAge);
     } else if (age[i] >= minAge && age[i] < maxAge) {
         console.log("Welcome!");
-    } else if (age[i] >= maxAge) {
+    } else if (age[i] > maxAge) {
         console.log("Keep calm and look Culture channel");
     } else {
         console.log("Technical work");

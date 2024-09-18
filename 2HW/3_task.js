@@ -9,7 +9,7 @@ while (age_ask != 'end') {
         alert("You don't have access cause your age is " + age_ask + " It's less then " + minAge);
     } else if (age_ask >= minAge && age_ask < maxAge) {
         alert("Welcome!");
-    } else if (age_ask >= maxAge) {
+    } else if (age_ask > maxAge) {
         alert("Keep calm and look Culture channel");
     } else {
         alert("Technical work");
