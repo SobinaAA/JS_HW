@@ -39,18 +39,36 @@ function Caesar(secret, move) {
 console.log(Caesar(str1, offset1));
 console.log(Caesar(str2, offset2));
 //Выполняю шифр с ASCII
+
 console.log('_____________Шифрование через ASCII_____________');
+const minUL = 65;
+const maxUL = 90;
+const minLL = 97;
+const maxLL = 122;
 function CaesarASCII(secret, move) {
     console.log(`Вы хотите зашифровать: ${secret}, со сдвигом ${move}`)
     let secretWord = '';
     for (let i = 0; i < secret.length; i++) {
-        if (secret.codePointAt(i) >= 65 && secret.codePointAt(i) <=90) {
-            secretWord += String.fromCodePoint((secret.codePointAt(i) + move) % 91);
-        } else if (secret.codePointAt(i) >= 97 && secret.codePointAt(i) <=122) {
-            secretWord += String.fromCodePoint((secret.codePointAt(i) + move) % 123);
+        if (secret.codePointAt(i) >= minUL && secret.codePointAt(i) <= maxUL) {
+            if ((secret.codePointAt(i) + move) > maxUL) {
+                secretWord += String.fromCodePoint((secret.codePointAt(i) + move - 1) % maxUL + minUL);
+            } else if ((secret.codePointAt(i) + move) < minUL) {
+                secretWord += String.fromCodePoint((secret.codePointAt(i) + move) - minUL + maxUL + 1);
+            } else {
+            secretWord += String.fromCodePoint((secret.codePointAt(i) + move));
+            }
+        } else if (secret.codePointAt(i) >= minLL && secret.codePointAt(i) <= maxLL) {
+            if ((secret.codePointAt(i) + move) > maxLL) {
+                secretWord += String.fromCodePoint((secret.codePointAt(i) + move - 1) % maxLL + minLL);
+            } else if ((secret.codePointAt(i) + move) < minLL) {
+                secretWord += String.fromCodePoint((secret.codePointAt(i) + move) - minLL + maxLL + 1);
+            } else {
+            secretWord += String.fromCodePoint((secret.codePointAt(i) + move));
+            }
         }
     }
+    return `Результат шифрования:   ${secretWord}  \n`;
 }
 
-console.log(Caesar(str1, offset1));
-console.log(Caesar(str2, offset2));
+console.log(CaesarASCII(str1, offset1));
+console.log(CaesarASCII(str2, offset2));
