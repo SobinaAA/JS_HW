@@ -6,31 +6,39 @@
 
 
 "use strict";
-const str1 = 'ZzZ';
-const offset1 = 1;
+//Параметры алафавита (границы заглавных и строчных букв в таблице ASCII)
+const minUL = 65;
+const maxUL = 90;
+const minLL = 97;
+const maxLL = 122;
 
-const str2 = 'AbC';
+//Шифруемые строки и шаг шифрования
+const str1 = 'ZzZ AbC - BaC zZz!';
+const offset1 = 1;
+const str2 = 'ZzZ AbC - BaC zZz!';
 const offset2 = -1;
 
-//Шифрование через свой алфавит, пишу алфавит
+//Шифрование через свой алфавит
+//Пишу алфавит
 console.log('_____________Шифрование через свой алфавит_____________');
 let engUpperAlphabet = '';
 let engLowerAlphabet = '';
-for (let i = 65; i < 91; i++) {
+for (let i = minUL; i <= maxUL; i++) {
     engUpperAlphabet += String.fromCodePoint(i);
     }
-for (let i = 97; i < 123; i++) {
+for (let i = minLL; i <= maxLL; i++) {
     engLowerAlphabet += String.fromCodePoint(i);
     }
 function Caesar(secret, move) {
     console.log(`Вы хотите зашифровать: ${secret}, со сдвигом ${move > 0 ? 'вправо' : 'влево'}`)
     let secretWord = '';
     for (let i = 0; i < secret.length; i++) {
-        
         if (engUpperAlphabet.includes(secret[i])) {
             secretWord += engUpperAlphabet.at((engUpperAlphabet.indexOf(secret[i]) + move) % engUpperAlphabet.length);
         } else if (engLowerAlphabet.includes(secret[i])) {
             secretWord += engLowerAlphabet.at((engLowerAlphabet.indexOf(secret[i]) + move) % engLowerAlphabet.length);
+        } else {
+            secretWord += secret[i];
         }
     }
     return `Результат шифрования:   ${secretWord}  \n`;
@@ -41,10 +49,7 @@ console.log(Caesar(str2, offset2));
 //Выполняю шифр с ASCII
 
 console.log('_____________Шифрование через ASCII_____________');
-const minUL = 65;
-const maxUL = 90;
-const minLL = 97;
-const maxLL = 122;
+
 function CaesarASCII(secret, move) {
     console.log(`Вы хотите зашифровать: ${secret}, со сдвигом ${move}`)
     let secretWord = '';
@@ -65,6 +70,8 @@ function CaesarASCII(secret, move) {
             } else {
             secretWord += String.fromCodePoint((secret.codePointAt(i) + move));
             }
+        } else {
+            secretWord += secret[i];
         }
     }
     return `Результат шифрования:   ${secretWord}  \n`;
