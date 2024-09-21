@@ -23,7 +23,7 @@ for (let i = 97; i < 123; i++) {
     engLowerAlphabet += String.fromCodePoint(i);
     }
 function Caesar(secret, move) {
-    console.log(`Вы хотите зашифровать: ${secret}, со сдвигом ${move}`)
+    console.log(`Вы хотите зашифровать: ${secret}, со сдвигом ${move > 0 ? 'вправо' : 'влево'}`)
     let secretWord = '';
     for (let i = 0; i < secret.length; i++) {
         
