@@ -4,7 +4,7 @@
 //   - При удалении дубликата, длина массива должна уменьшаться
 'use strict';
 console.log('\nПервое решение');
-let myArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9];
+const myArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9];
 console.log(`Длина моего массива до преобразования - ${myArray.length}, вот он: ${myArray}`);
 for (let numArr of myArray) {
     if (myArray.indexOf(numArr) != myArray.lastIndexOf(numArr)) {
@@ -14,7 +14,7 @@ for (let numArr of myArray) {
 console.log(`Длина моего массива после преобразования - ${myArray.length}, вот он: ${myArray}`);
 
 console.log('\nВторое решение');
-let myArray2 = [1, 2, 3, 4, 5, 6, 7, 8, 5, 6, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 3, 
+const myArray2 = [1, 2, 3, 4, 5, 6, 7, 8, 5, 6, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 3, 
     10, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9, 9, 9, 4, 5, 4, 4, 4, 6];
 console.log(`Длина моего массива до преобразования - ${myArray2.length}, вот он: ${myArray2}`);
 for (let i = 0; i < myArray2.length; i++) {
@@ -23,3 +23,10 @@ for (let i = 0; i < myArray2.length; i++) {
     }
 }
 console.log(`Длина моего массива после преобразования - ${myArray2.length}, вот он: ${myArray2}`);
+
+console.log('\nТретье решение'); //https://learn.javascript.ru/map-set#set
+const myArray3 = [1, 2, 3, 4, 5, 6, 7, 8, 5, 6, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 3, 
+    10, 2, 4, 6, 8, 10, 1, 3, 5, 7, 9, 9, 9, 4, 5, 4, 4, 4, 6];
+
+let newArray = [...new Set(myArray3)];      
+console.log(`Длина моего массива после преобразования - ${newArray.length}, вот он: ${newArray}`);
