@@ -10,7 +10,7 @@ function palindrom(word) {
     let smallWord = word.toLowerCase();
     let result = true;
     for (let i = 0; i <= smallWord.length /2; i++) {
-         if (smallWord[i] == smallWord[smallWord.length - i - 1]) {
+         if (smallWord[i] === smallWord[smallWord.length - i - 1]) {
                 result = true;
         } else {
             result = false;
