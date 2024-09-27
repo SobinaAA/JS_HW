@@ -8,16 +8,12 @@ function logSuperCool() {
 logSuperCool();
 function palindrom(word) {
     let smallWord = word.toLowerCase();
-    let result = true;
     for (let i = 0; i <= smallWord.length /2; i++) {
-         if (smallWord[i] == smallWord[smallWord.length - i - 1]) {
-                result = true;
-        } else {
-            result = false;
-            break;
+         if (smallWord[i] !== smallWord[smallWord.length - i - 1]) {
+          return false;
         }
     } 
-    return result;
+    return true;
 }
 console.log('Четное количество символов, палиндром - ' + palindrom('ababCsScBaba'));
 console.log('Нечетное количество символов, палиндром - ' + palindrom('KLOPoLK'));
@@ -31,15 +27,14 @@ function countChar(sentence) {
   let coolWords = [];
   let max = 0;
   for (let word of arraySentence) {
-    if (word.length > max) {
-        max = word.length;
-    }
-  }
-  for (let word of arraySentence) {
-    if (word.length == max) {
+      if (word.length > max) {
+          coolWords.length = 0;
+          max = word.length;
+          coolWords.push(word);
+      } else if (word.length == max) {
         coolWords.push(word);
-    }
+      } 
   }
   return coolWords;
 }
-console.log(countChar('Моя фраза состоит из пары слов и может быть это сложно но это не всерьез'));
+console.log(countChar('Моя полосищ фраза состоит из пары слов и может быть это сложно но это не всерьез словеса'));
