@@ -7,7 +7,7 @@ function logSuperCool() {
 // 1. Написать функцию, которая принимает на вход слово и проверяет, является ли это слово палиндромом
 logSuperCool();
 function palindrom(word) {
-    let smallWord = word.toLowerCase();
+    const smallWord = word.toLowerCase();
     let result = true;
     for (let i = 0; i <= smallWord.length /2; i++) {
          if (smallWord[i] === smallWord[smallWord.length - i - 1]) {
