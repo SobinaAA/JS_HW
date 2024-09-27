@@ -29,9 +29,8 @@ function countChar(sentence) {
   let max = 0;
   for (let word of arraySentence) {
       if (word.length > max) {
-          coolWords.length = 0;
           max = word.length;
-          coolWords.push(word);
+          coolWords = [word];
       } else if (word.length == max) {
         coolWords.push(word);
       } 
