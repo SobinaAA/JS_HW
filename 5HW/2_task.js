@@ -11,6 +11,7 @@ function palindrom(word) {
     for (let i = 0; i <= smallWord.length /2; i++) {
          if (smallWord[i] !== smallWord[smallWord.length - i - 1]) {
           return false;
+
         }
     } 
     return true;
