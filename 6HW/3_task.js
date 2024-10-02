@@ -33,7 +33,8 @@ function findNum3(arr = []) {
     const numbers = uniqArr.filter((element, index, array) => {
         return ((element != array[index + 1] - 1) && (index != array.length - 1));
       });
-    return numbers.map(el => el + 1);
+    const result = numbers.length == 0? 'Простите, пропущенных нет': numbers.map(el => el + 1);
+    return result;
 }
 console.log(`Пропущенные числа: ${findNum3(arrayTask3_2)}`);
 //Функция для вывода красивого разделителя между задачами
