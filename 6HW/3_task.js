@@ -30,7 +30,6 @@ const arrayTask3_2 = [2, 1, 1, 3, 7, 8, 6, 5, 8, 4, 10, 12, 13, 14];
 function findNum3(arr = []) {
     const sortedArr = [...arr].sort((a, b) => a - b);
     const uniqArr = [... new Set(sortedArr)];
-    console.log(uniqArr);
     const numbers = uniqArr.filter((element, index, array) => {
         return ((element != array[index + 1] - 1) && (index != array.length - 1));
       });
