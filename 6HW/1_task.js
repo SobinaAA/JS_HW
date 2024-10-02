@@ -35,7 +35,7 @@ const sortedStringsAsc = [...arrayForTask1].sort((a, b) => a - b);
 console.log(sortedStringsAsc);
 logSuperCool();
 //   6. reduce - получите сумму всех чисел массива //466
-const sum = arrayForTask1.reduce((result, element) => result += element, 0);
+const sum = arrayForTask1.reduce((result, element) => result + element, 0);
 console.log(sum);
 logSuperCool();
 //   7. some - проверьте, есть ли в массиве элементы больше 90 //true
