@@ -10,4 +10,15 @@ function findNum(arr = []) {
     const number = sortedArr.find((element, index, array) => {return (array[index + 1] - element == 2)})
     return number + 1;
 }
+
+function findNum(arr = []) {
+    const sortedArr = [...arr].sort((a, b) => a - b);
+    const number = sortedArr.reduce((result, element, index, array) => {
+        if (array[index + 1] - element === 2) {
+            return result + element};  
+        return result;
+    },0)
+    return number + 1;
+}
+
 console.log(`Пропущенное число: ${findNum(arrayTask3)}`);
