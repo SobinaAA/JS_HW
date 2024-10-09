@@ -20,8 +20,9 @@ console.log(characters);
 logSuperCool();
 // 2. Напишите функцию getCharacter(name), позволяющую получить объект персонажа по его имени// getCharacter('Fred') => { 'name': 'Fred', 'age': 40 }
 function getCharacter(nameChar = ''){
-    if (characters.map(element => Object.values(element)).flat().includes(nameChar))
+    if (characters.map(element => Object.values(element)).flat().includes(nameChar)) {
     return characters.find(character => character.name === nameChar);
+    } else console.log('Нет такого персонажа!');
 }
 console.log(getCharacter('Fred'));
 logSuperCool();
@@ -33,18 +34,18 @@ console.log(getCharactersByAge(40));
 logSuperCool();
 // 4. Напишите функцию updateCharacter(name, newCharacter). (Методом getCharacter(name) получаем ссыклку на нужного персонажа, а потом меняем ему данные)
 function updateCharacter(name, newCharacter) {
-    const charToChange = characters.find(character => character.name === name);
+    const charToChange = getCharacter(name);
     if (charToChange !== undefined) {
     charToChange.name = newCharacter.name;
     charToChange.age = newCharacter.age;
-    } else console.log('Нет такого персонажа!')
+    } 
 }
 updateCharacter('Alena', {name: 'Ololena', age: 100});
 console.log(characters);
 logSuperCool();
 // 5. Напишите функцию для удаления персонажа removeCharacter(name) (Реализовать через splice, индекс персонажа искать методом findInxex)
 function removeCharacter(name) {
-    if (characters.map(element => Object.values(element)).flat().includes(name)) characters.splice(characters.findIndex(character => character.name === name),1);
+    if (getCharacter(name) != undefined) characters.splice(characters.findIndex(character => character.name === name),1);
 }
 removeCharacter('Ololena');
 console.log(characters);
