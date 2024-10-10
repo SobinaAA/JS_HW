@@ -13,7 +13,8 @@ logSuperCool();
 // 3. Создать массив из ключей и значений объекта character, перебрать массив циклом for. 
 //    На каждой итерации вывести пары ключ-значнение в виде `key = ${key}, value = ${value}`
 const entries = Object.entries(character);
-for (const prop of entries) {console.log(`key = ${prop[0]}, value = ${prop[1]}`)};
+for (const [key, value] of entries) {console.log(`key = ${key}, value = ${value}`)};
+
 logSuperCool();
 // 4. Проверить, есть ли в объекте ключ salary, результат вывести в консоль 
 //    (Реализовать 2мя способами: через оператор in и Object.hasOwn())
