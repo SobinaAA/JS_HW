@@ -35,7 +35,7 @@ logSuperCool();
 // 4. Напишите функцию updateCharacter(name, newCharacter). (Методом getCharacter(name) получаем ссыклку на нужного персонажа, а потом меняем ему данные)
 function updateCharacter(name, newCharacter) {
     const charToChange = getCharacter(name);
-    if (charToChange !== undefined) {
+    if (charToChange) {
     charToChange.name = newCharacter.name;
     charToChange.age = newCharacter.age;
     } 
