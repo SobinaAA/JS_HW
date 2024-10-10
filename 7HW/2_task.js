@@ -45,7 +45,7 @@ console.log(characters);
 logSuperCool();
 // 5. Напишите функцию для удаления персонажа removeCharacter(name) (Реализовать через splice, индекс персонажа искать методом findInxex)
 function removeCharacter(name) {
-    if (getCharacter(name) != undefined) characters.splice(characters.findIndex(character => character.name === name),1);
+    if (getCharacter(name)) characters.splice(characters.findIndex(character => character.name === name),1);
 }
 removeCharacter('Ololena');
 console.log(characters);
