@@ -38,10 +38,7 @@ console.log(getNewRandom());
 console.log('_______________________________________ANOTHER WAY__________________________________________');
 const createRandom2 = (n) => {
     const wereUsed = [];
-    const allNum = [];
-    for (let i = 1; i <= n; i++) {
-        allNum.push(i);
-    }
+const allNum = Array.from({ length: n }, (_, i) => i + 1);
     return () => {
         if (wereUsed.length >= allNum.length) {
             return 'All numbers were received';
