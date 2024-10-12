@@ -15,3 +15,11 @@ function countOccurrences(arr) {
     return obj;
 }
 console.log(countOccurrences(numbers));
+
+function countOccurrences2(arr) {
+    return arr.reduce((obj, number) => {
+        obj[number] = arr.filter((element) => element == number).length; 
+        return obj
+    }, {});
+}
+console.log(countOccurrences2(numbers));

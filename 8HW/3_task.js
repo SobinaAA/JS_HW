@@ -63,3 +63,28 @@ console.log(getNewRandom2());
 console.log(getNewRandom2());
 console.log(getNewRandom2());
 console.log(getNewRandom2());
+console.log('_______________________________________ANOTHER WAY__________________________________________');
+const createRandom3 = (n) => {
+    const allNum = Array.from({ length: n }, (_, i) => i + 1);
+    return () => {
+        if (!allNum.length) {
+            return 'All numbers were received';
+        } else {
+           let newNum = Math.round(getRandomArbitrary(1, n));
+           while (!allNum.includes(newNum)) {
+                newNum = Math.round(getRandomArbitrary(1, n));
+           };
+           allNum.splice(allNum.indexOf(newNum), 1);
+           return newNum
+        }
+    }
+  }
+const  getNewRandom3 = createRandom3(5);
+console.log(getNewRandom3());
+console.log(getNewRandom3());
+console.log(getNewRandom3());
+console.log(getNewRandom3());
+console.log(getNewRandom3());
+console.log(getNewRandom3());
+console.log(getNewRandom3());
+console.log(getNewRandom3());
