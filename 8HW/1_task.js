@@ -25,7 +25,8 @@ const anotherQa = {
     age: 20,
     salary: '1$'
 }
-console.log(qa.getInfo.bind(anotherQa)(('Hello')));
+console.log(qa.getInfo.bind(anotherQa)('Hello'));
+// console.log(qa.getInfo.bind(anotherQa, 'Hello')());
 console.log(qa.getInfo.call(anotherQa, 'Hello')); 
 console.log(qa.getInfo.apply(anotherQa, ['Hello'])); 
 logSuperCool();
