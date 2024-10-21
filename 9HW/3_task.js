@@ -206,8 +206,9 @@ class Manager extends Employee {
         }
     }
     removeEmployee(firstName) {
-        if (this.#getEmployeeIndex(firstName) != -1) {
-        this.getEmployees().splice(this.#getEmployeeIndex(firstName), 1);
+       const index = this.#getEmployeeIndex(firstName);
+        if (index != -1) {
+        this.getEmployees().splice(index, 1);
         } else {
             console.log('Нет такого сотрудника');
         }
