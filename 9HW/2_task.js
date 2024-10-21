@@ -142,10 +142,7 @@ class Company {
         }
     }
     getTotalSalary() {
-        return this.getEmployees().reduce((sum, emp) =>  {
-            sum += emp.salary;
-            return sum;
-        }, 0);
+        return this.getEmployees().reduce((sum, emp) =>  sum + emp.salary, 0);
     }
 }
 // 5. Проверьте свой код:
