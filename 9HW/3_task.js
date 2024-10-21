@@ -24,8 +24,7 @@
 //       getEmployeesByProfession("Designer"), возвращающий массив всех дизайнеров.
 // 4. Добавьте валидацию в метод addEmployee класса Company, которая будет проверять имя+фамилию нового сотрудника на уникальность.
 //    Добавлять сотрудника с таким же именем+фамилией как у уже имеющегося - нельзя.
-const alfa = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-const alfaWs = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+const alfa = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 class Employee {
     #salary;
     constructor(firstName, lastName, salary) {
@@ -46,21 +45,21 @@ class Employee {
         return this.#salary;
     }
     set firstName(firstName) {
-        if (typeof firstName !== "string" || firstName.length <= 2 || firstName.length >= 50 || !firstName.split('').every(char => alfa.includes(char))) {
+        if (typeof firstName !== "string" || firstName.length <= 2 || firstName.length >= 50 || !firstName.split('').every(char => alfa.trim().includes(char))) {
         console.log('Некорректный тип данных');
         return;
         }
         this._firstName = firstName;
     }
     set lastName(lastName) {
-        if (typeof lastName !== "string" || lastName.length <= 2 || lastName.length >= 50 || !lastName.split('').every(char => alfa.includes(char))) {
+        if (typeof lastName !== "string" || lastName.length <= 2 || lastName.length >= 50 || !lastName.split('').every(char => alfa.trim().includes(char))) {
         console.log('Некорректный тип данных');
         return;
         }
         this._lastName = lastName;
     }
     set profession(profession) {
-        if (typeof profession !== "string" || profession.length == 0 || !profession.split('').every(char => alfaWs.includes(char))) {
+        if (typeof profession !== "string" || profession.length == 0 || !profession.split('').every(char => alfa.includes(char))) {
         console.log('Некорректный тип данных');
         return;
         }
@@ -85,7 +84,7 @@ class Developer extends Employee {
     constructor(firstName, lastName, salary, programmingLanguages = []) {
         super(firstName, lastName, salary);
         for (const programmingLanguage of programmingLanguages) {
-            this.programmingLanguages.push(programmingLanguage);
+            this.addProgrammingLanguage(programmingLanguage);
         }
     };
     addProgrammingLanguage(language){
@@ -116,7 +115,7 @@ class Manager extends Employee {
     constructor(firstName, lastName, salary, designTools = []) {
         super(firstName, lastName, salary);
         for (const designTool of designTools) {
-            this.designTools.push(designTool);
+            this.addDesignTool(designTool);
         }
     };
     addDesignTool(tool){
@@ -130,6 +129,11 @@ class Manager extends Employee {
  }
  class Company {
     #employees = [];
+    map = { 
+        Manager: Manager,
+        Developer: Developer,
+        Designer: Designer,
+    };
     constructor(title, phone, address, employees = []) {
         this.title = title;
         this.phone = phone;
@@ -170,14 +174,14 @@ class Manager extends Employee {
         this._address = address;
     }
     addEmployee(employee) {
-        if (employee instanceof Employee) {
+        if (!(employee instanceof Employee)) {
+            throw new Error("Invalid value, you need to add some employee!");
+        } else {
             let index = this.getEmployees().findIndex(emp => emp.fullName() === (employee.firstName + employee.lastName));
             if (index !== -1) {
                 console.log('Работник с такими ФИ уже есть!');
                 console.log(this.getEmployees().at(index))
-            } else {
-                this.#employees.push(employee);
-            }
+            } 
         }
     }
     getEmployees() {
@@ -188,7 +192,7 @@ class Manager extends Employee {
     }
     #getEmployeeIndex(firstName) {
         if (typeof firstName !== "string") {
-            return -1;
+            throw new Error("Invalid value");
             }
         let index = this.getEmployees().findIndex(emp => emp._firstName === firstName);
         return index;
@@ -208,35 +212,47 @@ class Manager extends Employee {
             console.log('Нет такого сотрудника');
         }
     }
+    // getEmployeesByProfession(profession) {
+    //     if (profession === "Manager") {
+    //         const result = [];
+    //         this.getEmployees().forEach(emp => {
+    //             if (emp instanceof Manager) {
+    //                 result.push(emp);
+    //             }
+    //         });
+    //         return result;
+    //     } else if (profession === "Developer") {
+    //         const result = [];
+    //         this.getEmployees().forEach(emp => {
+    //             if (emp instanceof Developer) {
+    //                 result.push(emp);
+    //             }
+    //         });
+    //         return result;
+    //     }else if (profession === "Designer") {
+    //         const result = [];
+    //         this.getEmployees().forEach(emp => {
+    //             if (emp instanceof Designer) {
+    //                 result.push(emp);
+    //             }
+    //         });
+    //         return result;
+    //     } else {
+    //        return 'Найдено 0.'
+    //     }
+    // }
+
     getEmployeesByProfession(profession) {
-        if (profession === "Manager") {
-            const result = [];
-            this.getEmployees().forEach(emp => {
-                if (emp instanceof Manager) {
-                    result.push(emp);
-                }
-            });
-            return result;
-        } else if (profession === "Developer") {
-            const result = [];
-            this.getEmployees().forEach(emp => {
-                if (emp instanceof Developer) {
-                    result.push(emp);
-                }
-            });
-            return result;
-        }else if (profession === "Designer") {
-            const result = [];
-            this.getEmployees().forEach(emp => {
-                if (emp instanceof Designer) {
-                    result.push(emp);
-                }
-            });
-            return result;
-        } else {
-           return 'Найдено 0.'
-        }
+        const result = [];
+        const currentProfession = map[profession];
+        this.getEmployees().forEach((emp) => {
+          if (emp instanceof currentProfession) {
+            result.push(emp.fullName());
+          }
+        });
+        return result;
     }
+
     getTotalSalary() {
         return this.getEmployees().reduce((sum, emp) =>  {
             sum += emp.salary;

@@ -10,8 +10,7 @@
 //     firstName и lastName — строка от 2 до 50 символов, только латинские буквы.
 //     profession — строка, не может быть пустой, только латинские буквы и пробелы.
 //     salary — число, должно быть больше 0 и меньше 10000.
-const alfa = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-const alfaWs = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+const alfa = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 class Employee {
     #salary;
     constructor(firstName, lastName, profession, salary) {
@@ -33,21 +32,21 @@ class Employee {
         return this.#salary;
     }
     set firstName(firstName) {
-        if (typeof firstName !== "string" || firstName.length <= 2 || firstName.length >= 50 || !firstName.split('').every(char => alfa.includes(char))) {
+        if (typeof firstName !== "string" || firstName.length <= 2 || firstName.length >= 50 || !firstName.split('').every(char => alfa.trim().includes(char))) {
         console.log('Некорректный тип данных');
         return;
         }
         this._firstName = firstName;
     }
     set lastName(lastName) {
-        if (typeof lastName !== "string" || lastName.length <= 2 || lastName.length >= 50 || !lastName.split('').every(char => alfa.includes(char))) {
+        if (typeof lastName !== "string" || lastName.length <= 2 || lastName.length >= 50 || !lastName.split('').every(char =>alfa.trim().includes(char))) {
         console.log('Некорректный тип данных');
         return;
         }
         this._lastName = lastName;
     }
     set profession(profession) {
-        if (typeof profession !== "string" || profession.length == 0 || !profession.split('').every(char => alfaWs.includes(char))) {
+        if (typeof profession !== "string" || profession.length == 0 || !profession.split('').every(char => alfa.includes(char))) {
         console.log('Некорректный тип данных');
         return;
         }
