@@ -131,7 +131,7 @@ class Company {
         if (index != -1) {
         return this.#employees[index];
         } else {
-            console.log('Нет такого сотрудника')
+            console.log('Сотрудника с именем ${firstName} не найдено')
         }
     }
     removeEmployee(firstName) {
