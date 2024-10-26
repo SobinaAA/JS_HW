@@ -28,9 +28,18 @@ const URLs = {
     userPhotoInAlbums: (userID) => `/albums/${userID}/photos`,
   };
 
+async function getUser(userId) {
+   return fetch(URLs.baseUrl + URLs.users(userId));
+};
+async function getALbums(userId) {
+    return fetch(URLs.baseUrl + URLs.userAlbums(userId));
+ };
+ async function getPhotoInAlbums(userId) {
+    return fetch(URLs.baseUrl + URLs.userPhotoInAlbums(userId));
+ };
 async function getTnformationAboutPhotos(userId) {
     try {
-        const responses = await Promise.all([fetch(URLs.baseUrl + URLs.users(userId)), fetch(URLs.baseUrl + URLs.userAlbums(userId)), fetch(URLs.baseUrl + URLs.userPhotoInAlbums(userId))])
+        const responses = await Promise.all([getUser(userId), getALbums(userId), getPhotoInAlbums(userId)])
         const [objUser, objAlbum, objPhoto] = await Promise.all(responses.map(response => {
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return response.json();
