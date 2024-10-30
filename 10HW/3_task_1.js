@@ -41,11 +41,8 @@ async function getALbums(userId) {
  };
 async function getTnformationAboutPhotos(userId) {
     try {
-        const responses = await Promise.all([getUser(userId), getALbums(userId), getPhotoInAlbums(userId)])
-        const [objUser, objAlbum, objPhoto] = await Promise.all(responses.map(response => {
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-            return response.json();
-    }));
+        const [user, albums] = await Promise.all([getUser(userId), getALbums(userId), getPhotoInAlbums(userId)])
+
         const result = {'id': userId,'name': objUser['name'], 'email': objUser['email'], 'phone': objUser['phone'], company: objUser['company']['name'], albums: []};
     const mappedAlbumPhotos = await Promise.all(
       albums.map((album) => getPhotoInAlbums(album.id)),
