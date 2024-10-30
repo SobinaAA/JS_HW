@@ -6,10 +6,8 @@
 //   - Пароль должен быть не менее 8 символов.
 //   - Пароль не должен состоять из одних пробелов
 // Функция должна возвращать false, если хотя бы одно из условий не выполнено.
-function validatePassword(password: string): boolean {
-    const regex: RegExp = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+$/;
-    return regex.test(password) && password.length >= 8
-}
+const validatePassword = (password: string): boolean =>
+   /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*\S).{8,}$/.test(password);
 console.log(validatePassword('12888277172828'));
 console.log(validatePassword('              '));
 console.log(validatePassword('129Jk'));
