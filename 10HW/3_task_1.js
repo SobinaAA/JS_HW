@@ -29,22 +29,37 @@ const URLs = {
   };
 
 async function getUser(userId) {
-   return fetch(URLs.baseUrl + URLs.users(userId));
+  try {
+    const response = await fetch(URLs.baseUrl + URLs.users(userId));
+    const user = await response.json();
+    return user;
+  } catch (err) {
+    console.log(err)
+  }
 };
 async function getALbums(userId) {
+  try {
     const response = await fetch(URLs.baseUrl + URLs.userAlbums(userId));
     const listOfAlbums = await response.json();
     return listOfAlbums;
+  } catch (err) {
+    console.log('Что-то не так пошло с запросом альбомов!')
+  }
  };
  async function getPhotoInAlbums(userId) {
-    return fetch(URLs.baseUrl + URLs.userPhotoInAlbums(userId));
+    try {
+      const response = await fetch(URLs.baseUrl + URLs.userPhotoInAlbums(userId));
+      const photos = await response.json();
+      return photos;
+    } catch (err) {
+      console.log('Что-то не так пошло с запросом фотографий!')
+    }
  };
 async function getTnformationAboutPhotos(userId) {
     try {
-        const [user, albums] = await Promise.all([getUser(userId), getALbums(userId), getPhotoInAlbums(userId)])
-
-        const result = {'id': userId,'name': objUser['name'], 'email': objUser['email'], 'phone': objUser['phone'], company: objUser['company']['name'], albums: []};
-    const mappedAlbumPhotos = await Promise.all(
+        const [user, albums] = await Promise.all([getUser(userId), getALbums(userId)])
+        const result = {'id': userId,'name': user['name'], 'email': user['email'], 'phone': user['phone'], company: user['company']['name'], albums: []};
+      const mappedAlbumPhotos = await Promise.all(
       albums.map((album) => getPhotoInAlbums(album.id)),
     );
 
