@@ -47,9 +47,13 @@ async function getTnformationAboutPhotos(userId) {
             return response.json();
     }));
         const result = {'id': userId,'name': objUser['name'], 'email': objUser['email'], 'phone': objUser['phone'], company: objUser['company']['name'], albums: []};
-        objAlbum.forEach(album => {
-            result.albums.push(`${album['title']} (${objPhoto.filter(photo => photo['albumId'] == album['id']).length} photos}`);
-        })
+    const mappedAlbumPhotos = await Promise.all(
+      albums.map((album) => getPhotoInAlbums(album.id)),
+    );
+
+    for (const album of mappedAlbumPhotos) {
+      result.albums.push(`${album[0]['title']} (${album.length}) photos`);
+    }
        console.log(`${result.id}    name: ` + result.name);
        console.log('     email: ' + result.email);
        console.log('     phone: ' + result.phone);
