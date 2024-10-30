@@ -9,8 +9,8 @@
 // и возвращает общую сумму заказа с учетом возможных скидок.
 // Если у товара есть скидка, то она должна учитываться при расчете суммы.
 // Сумма заказа вычисляется как сумма цен всех товаров, умноженная на количество каждого товара в заказе.
-
-interface Product3 {
+export {};
+interface Product {
     id: number;
     name: string;
     price: number;
@@ -22,7 +22,7 @@ interface Customer {
     email: string;
   }  
 interface OrderItem {
-    product: Product3;
+    product: Product;
     quantity: number;
   }  
 interface Order {
@@ -32,19 +32,19 @@ interface Order {
     status?: 'pending' | 'shipped' | 'delivered';
   }  
 
-const product1: Product3 = {
+const product1: Product = {
     id: 1,
     name: "Смартфон",
     price: 500,
 };
 
-const product2: Product3 = {
+const product2: Product = {
     id: 2,
     name: "Ноутбук",
     price: 1000
 };
 
-const product3: Product3 = {
+const product3: Product = {
     id: 3,
     name: "Наушники",
     price: 100,
