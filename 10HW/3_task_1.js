@@ -32,7 +32,9 @@ async function getUser(userId) {
    return fetch(URLs.baseUrl + URLs.users(userId));
 };
 async function getALbums(userId) {
-    return fetch(URLs.baseUrl + URLs.userAlbums(userId));
+    const response = await fetch(URLs.baseUrl + URLs.userAlbums(userId));
+    const listOfAlbums = await response.json();
+    return listOfAlbums;
  };
  async function getPhotoInAlbums(userId) {
     return fetch(URLs.baseUrl + URLs.userPhotoInAlbums(userId));
