@@ -21,7 +21,7 @@ class Storage<T extends { id: number }> {
     constructor(array?: T[]) {
         if (array) this.array.push(...array);
     }
-    countId () : number {
+    private countId () : number {
        let max = 0;
        this.array.forEach(elem => {
         if (elem.id > max) max = elem.id;
@@ -37,7 +37,7 @@ class Storage<T extends { id: number }> {
         this.array.push(newElement as T)
         }
     }
-    findIndexById (id: number) : number {
+    private findIndexById (id: number) : number {
         return this.array.findIndex((element) => element.id == id);
     }
     update (elem: Partial<T> & { id: number }): void { 
