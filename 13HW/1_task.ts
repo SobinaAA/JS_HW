@@ -7,11 +7,10 @@
     const stringArray = wrapInArray('Hello'); // ['Hello']
     console.log(numberArray, stringArray);
 
-// 2. Создайте дженерик функцию getFirstElement, которая принимает массив элементов типа T, и возвращает первый элемент (типа T). 
-//Так первый или последний?
+// 2. Создайте дженерик функцию getFirstElement, которая принимает массив элементов типа T, и возвращает последний элемент
 
     function getLastItem<T> (array: T[]) : T {
-      return array[0];
+      return array[-1];
     }
     console.log(getLastItem([1, 2, 3, 4])); // 4
     console.log(getLastItem(['a', 'b', 'c'])); // 'c'
