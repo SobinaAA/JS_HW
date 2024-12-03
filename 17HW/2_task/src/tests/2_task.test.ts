@@ -1,102 +1,10 @@
-// Разработайте смоук тест-сьют с тестами на LOGIN на странице https://anatoly-karpovich.github.io/demo-login-form/
-
-// Требования:
-//   Страница регистрации:
-//     Username: обязательное, от 3 до 40 символов включительно, запрещены префиксные/постфиксные пробелы, как и имя состоящее из одних пробелов
-//     Password: обязательное, от 8 до 20 символов включительно, необходима хотя бы одна буква в верхнем и нижнем регистрах, пароль из одних пробелов запрещен
-//   Страница логина:
-//     Username: обязательное
-//     Password: обязательное
-
-interface ICredentials {
-    login: string,
-    password: string
-}
-
+import {correctCredentials, incorrectCredentials} from "../credentials/credentials";
+import * as sel from "../data/selectors";
+import * as n from "../data/notifications";
 describe('First homework - login and registration', () => {
     //urls
     const url = "https://anatoly-karpovich.github.io/demo-login-form/";
-
-    //notifications and labels
-    const successNotification = 'Successfully registered! Please, click Back to return on login page';
-    const emptyUsernameNotificatyion = 'Username is required';
-    const emptyPasswordNotificatyion = 'Password is required';
-    const emptyAllNotificatyion = 'Credentials are required';
-    const successLoginNotification = 'Hello, ';
-    const headerReg = 'Registration';
-    const headerLogin = 'Login';
-    
-    //selectors
-    const registrSelectors: ICredentials = {
-        login: '#userNameOnRegister',
-        password: '#passwordOnRegister'
-    }
-    const goToRegisterButtonSelector  = '#registerOnLogin';
-    const goToLoginButtonSelector  = '#backOnRegister';
-    const sumbitLogin = '#submit';
-    const sumbitRegister = '#register';    
-    const errorMessageRegisterSelector = '#errorMessageOnRegister';
-    const errorMessageLoginSelector = '#errorMessage';
-    const successMessageLoginSelector = '#successMessage';
-    const loginSelectors: ICredentials = {
-        login: '#userName',
-        password: '#password'
-    };
-    const headerRegSelector = '#registerForm';
-    const headerLoginSelector = '#loginForm';
-
-    //credentials
-    const correctCredentials: ICredentials[] = [
-        {   login: 'AB1',
-            password: 'AbCd1234'
-        },
-        {   login: 'tqgkits!l lnktmwasqc',
-            password: 'rftxw#rV bobfeYtRngG'
-        },
-        {   login: 'Алена',
-            password: 'Мойсложныйпароль'
-        },
-        {   login: 'AB2',
-            password: ' AbCd1234'
-        },
-        {   login: 'AB3',
-            password: 'AbCd1234 '
-        },
-        {   login: 'AGSBWBHECHHCHHEHEHCHCHEHCHEHEHHC1hhdhhqw',
-            password: 'AbCd1234 '
-        }
-    ];
-    const incorrectCredentials: ICredentials[] = [
-        {   login: 'AB4',
-            password: '        '//пробелы
-        },
-        {   login: 'Login',
-            password: 'ABCDEFGHIJKLM'//только заглавные
-        },
-        {   login: 'LO', //короткий
-            password: 'AbCGh26j1'
-        },
-        {   login: '   ', //пробелы
-            password: 'AbCd1234'
-        },
-        {   login: ' AB5', //пробелы
-            password: 'AbCd1234'
-        },
-        {   login: 'AB6 ', //пробелы
-            password: 'AbCd1234'
-        },
-        {   login: 'AB7',
-            password: 'FBu123i' //короткий
-        },
-        {   login: 'AGSBWBHECHHCHHEHEHCHCHEHCHEHEHHC1hhdhhqwdfsdfs', //длинный
-            password: 'AbC76YjIIo'
-        },
-        {   login: 'AB8',
-            password: 'NLsyDrnRuvEcLIbilcqJo' //длинный
-        },
-    ];
-
-
+ 
     //before and after tests
     before(async function () {
         await browser.maximizeWindow();
@@ -109,88 +17,86 @@ describe('First homework - login and registration', () => {
         browser.execute('window.localStorage.clear()');
     });
 
-
     //tests
-    it('NewUser', async function () {
-        await $(goToRegisterButtonSelector).click();
-        for (let item of correctCredentials) {
-            await $(registrSelectors.login).setValue(item.login);
-            await $(registrSelectors.password).setValue(item.password);
-            await $(sumbitRegister).click();
-            const actualText = await $(errorMessageRegisterSelector).getText();
-            expect(actualText).toContain(successNotification);
-            const stringFromStorage = await browser.execute((login) => {
-                return localStorage.getItem(login);
-            }, item.login);
-            const objectFromStorage = JSON.parse(stringFromStorage as string);
-            expect(objectFromStorage.name).toBe(item.login);
-            expect(objectFromStorage.password).toBe(item.password);
+    for (const { login, password } of correctCredentials) {
+        it(`Should register user with login: ${login} and password: ${password}`, async function () {
+            await $(sel.goToRegisterButtonSelector).click();
+                await $(sel.registrSelectors.login).setValue(login);
+                await $(sel.registrSelectors.password).setValue(password);
+                await $(sel.sumbitRegister).click();
+                const actualText = await $(sel.errorMessageRegisterSelector).getText();
+                expect(actualText).toContain(n.successNotification);
+                const stringFromStorage = await browser.execute((login) => {
+                    return localStorage.getItem(login);
+                }, login);
+                const objectFromStorage = JSON.parse(stringFromStorage as string);
+                expect(objectFromStorage.name).toBe(login);
+                expect(objectFromStorage.password).toBe(password);
+             });
         }
-    });
 
     it('LoginUser', async function () {
-        await $(goToRegisterButtonSelector).click();
+        await $(sel.goToRegisterButtonSelector).click();
         const item = Math.floor(Math.random() * correctCredentials.length);
-        await $(registrSelectors.login).setValue(correctCredentials[item].login);
-        await $(registrSelectors.password).setValue(correctCredentials[item].password);
-        await $(sumbitRegister).click();
-        await $(goToLoginButtonSelector).click();
+        await $(sel.registrSelectors.login).setValue(correctCredentials[item].login);
+        await $(sel.registrSelectors.password).setValue(correctCredentials[item].password);
+        await $(sel.sumbitRegister).click();
+        await $(sel.goToLoginButtonSelector).click();
 
-        await $(loginSelectors.login).setValue(correctCredentials[item].login);
-        await $(loginSelectors.password).setValue(correctCredentials[item].password);
-        await $(sumbitLogin).click();
-        const actualText = await $(successMessageLoginSelector).getText();
-        expect(actualText).toContain(successLoginNotification + correctCredentials[item].login + '!');
+        await $(sel.loginSelectors.login).setValue(correctCredentials[item].login);
+        await $(sel.loginSelectors.password).setValue(correctCredentials[item].password);
+        await $(sel.sumbitLogin).click();
+        const actualText = await $(sel.successMessageLoginSelector).getText();
+        expect(actualText).toContain(n.successLoginNotification + correctCredentials[item].login + '!');
         await browser.pause(3000);
     });
 
     it('loginWithEmptyFields', async function () {
         const item = Math.floor(Math.random() * correctCredentials.length);
-        await $(loginSelectors.login).setValue('');
-        await $(loginSelectors.password).setValue(correctCredentials[item].password);
-        await $(sumbitLogin).click();
+        await $(sel.loginSelectors.login).setValue('');
+        await $(sel.loginSelectors.password).setValue(correctCredentials[item].password);
+        await $(sel.sumbitLogin).click();
 
-        const actualTextUsername = await $(errorMessageLoginSelector).getText();
-        expect(actualTextUsername).toContain(emptyUsernameNotificatyion);
+        const actualTextUsername = await $(sel.errorMessageLoginSelector).getText();
+        expect(actualTextUsername).toContain(n.emptyUsernameNotificatyion);
         await browser.pause(2000);
 
-        await $(loginSelectors.login).setValue(correctCredentials[item].login);
-        await $(loginSelectors.password).setValue('');
-        await $(sumbitLogin).click();
+        await $(sel.loginSelectors.login).setValue(correctCredentials[item].login);
+        await $(sel.loginSelectors.password).setValue('');
+        await $(sel.sumbitLogin).click();
 
-        const actualTextPassword = await $(errorMessageLoginSelector).getText();
-        expect(actualTextPassword).toContain(emptyPasswordNotificatyion);
+        const actualTextPassword = await $(sel.errorMessageLoginSelector).getText();
+        expect(actualTextPassword).toContain(n.emptyPasswordNotificatyion);
         await browser.pause(2000);
 
-        await $(loginSelectors.login).setValue('');
-        await $(loginSelectors.password).setValue('');
-        await $(sumbitLogin).click();
+        await $(sel.loginSelectors.login).setValue('');
+        await $(sel.loginSelectors.password).setValue('');
+        await $(sel.sumbitLogin).click();
 
-        const actualTextAll = await $(errorMessageLoginSelector).getText();
-        expect(actualTextAll).toContain(emptyAllNotificatyion);
+        const actualTextAll = await $(sel.errorMessageLoginSelector).getText();
+        expect(actualTextAll).toContain(n.emptyAllNotificatyion);
         await browser.pause(2000);
     });
-
-    it('incorrectCredentialsRegister', async function () {
-        await $(goToRegisterButtonSelector).click();
-        for (let item of incorrectCredentials) {
-            await $(registrSelectors.login).setValue(item.login);
-            await $(registrSelectors.password).setValue(item.password);
-            await $(sumbitRegister).click();
-            const actualText = await $(errorMessageRegisterSelector).getText();
-            expect(actualText).not.toContain(successNotification);
+    for (const {login, password, errorText} of incorrectCredentials) {
+        it(`Should return error with text ${errorText} when try to register with login: ${login} and password: ${password}`, async function () {
+            await $(sel.goToRegisterButtonSelector).click();
+            await $(sel.registrSelectors.login).setValue(login);
+            await $(sel.registrSelectors.password).setValue(password);
+            await $(sel.sumbitRegister).click();
+            const actualText = await $(sel.errorMessageRegisterSelector).getText();
+            expect(actualText).toContain(errorText);
             await browser.pause(1000);
-        } 
-    });
+        });
+    }
 
-    it('buttonsAndScreensWork', async function () {
-        await $(goToRegisterButtonSelector).click();
-        const actualTextRegister = await $(headerRegSelector).getText();
-        expect(actualTextRegister).toContain(headerReg);
+    it('Different screen`s headers', async function () {
+        await $(sel.goToRegisterButtonSelector).click();
+        const actualTextRegister = await $(sel.headerRegSelector).getText();
+        expect(actualTextRegister).toContain(n.headerReg);
 
-        await $(goToLoginButtonSelector).click();
-        const actualTextLogin = await $(headerLoginSelector).getText();
-        expect(actualTextLogin).toContain(headerLogin);
+        await $(sel.goToLoginButtonSelector).click();
+        const actualTextLogin = await $(sel.headerLoginSelector).getText();
+        expect(actualTextLogin).toContain(n.headerLogin);
 
     });
     
