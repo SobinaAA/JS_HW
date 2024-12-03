@@ -35,7 +35,7 @@ describe('First homework - login and registration', () => {
              });
         }
 
-    it('LoginUser', async function () {
+    it('Login User after registration with correct creds', async function () {
         await $(sel.goToRegisterButtonSelector).click();
         const item = Math.floor(Math.random() * correctCredentials.length);
         await $(sel.registrSelectors.login).setValue(correctCredentials[item].login);
@@ -51,32 +51,39 @@ describe('First homework - login and registration', () => {
         await browser.pause(3000);
     });
 
-    it('loginWithEmptyFields', async function () {
+    it('shouldn`t login User with correct creds (no registration)', async function () {
         const item = Math.floor(Math.random() * correctCredentials.length);
-        await $(sel.loginSelectors.login).setValue('');
+        await $(sel.loginSelectors.login).setValue(correctCredentials[item].login);
         await $(sel.loginSelectors.password).setValue(correctCredentials[item].password);
         await $(sel.sumbitLogin).click();
-
-        const actualTextUsername = await $(sel.errorMessageLoginSelector).getText();
-        expect(actualTextUsername).toContain(n.emptyUsernameNotificatyion);
-        await browser.pause(2000);
-
-        await $(sel.loginSelectors.login).setValue(correctCredentials[item].login);
-        await $(sel.loginSelectors.password).setValue('');
-        await $(sel.sumbitLogin).click();
-
-        const actualTextPassword = await $(sel.errorMessageLoginSelector).getText();
-        expect(actualTextPassword).toContain(n.emptyPasswordNotificatyion);
-        await browser.pause(2000);
-
-        await $(sel.loginSelectors.login).setValue('');
-        await $(sel.loginSelectors.password).setValue('');
-        await $(sel.sumbitLogin).click();
-
-        const actualTextAll = await $(sel.errorMessageLoginSelector).getText();
-        expect(actualTextAll).toContain(n.emptyAllNotificatyion);
+        const actualText = await $(sel.errorMessageLoginSelector).getText();
+        expect(actualText).toContain(n.invalidCredentials);
         await browser.pause(2000);
     });
+    
+    for (let i = 10; i <= 11; i++) {
+        const item = incorrectCredentials[i];
+        it(`Should return error with text ${item.errorText} when try to login with login: ${item.login} and password: ${item.password}`, async function () {
+            await $(sel.goToRegisterButtonSelector).click();
+            await $(sel.registrSelectors.login).setValue(item.login);
+            await $(sel.registrSelectors.password).setValue(item.password);
+            await $(sel.sumbitRegister).click();
+            const actualText = await $(sel.errorMessageRegisterSelector).getText();
+            expect(actualText).toContain(item.errorText);
+            await browser.pause(1000);
+        });
+    }
+
+    it('shouldn`t login User with all empty fields', async function () {
+            const item = incorrectCredentials[12];
+            await $(sel.loginSelectors.login).setValue(item.login);
+            await $(sel.loginSelectors.password).setValue(item.password);
+            await $(sel.sumbitLogin).click();
+            const actualText = await $(sel.errorMessageLoginSelector).getText();
+            expect(actualText).toContain(n.emptyAllNotificatyion);
+            await browser.pause(2000);
+        });
+
     for (const {login, password, errorText} of incorrectCredentials) {
         it(`Should return error with text ${errorText} when try to register with login: ${login} and password: ${password}`, async function () {
             await $(sel.goToRegisterButtonSelector).click();
@@ -89,7 +96,7 @@ describe('First homework - login and registration', () => {
         });
     }
 
-    it('Different screen`s headers', async function () {
+    it('Check different screen`s headers', async function () {
         await $(sel.goToRegisterButtonSelector).click();
         const actualTextRegister = await $(sel.headerRegSelector).getText();
         expect(actualTextRegister).toContain(n.headerReg);

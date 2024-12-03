@@ -64,4 +64,17 @@ export const incorrectCredentials: ICredentials[] = [
         password: 'NLsyDrnRuvEcLIbilcqJo', //длинный,
         errorText: 'Invalid credentials'
     },
+    {   login: '',////пустой
+        password: 'NLsyDrnRuvbilcqJo', 
+        errorText: 'Username is required'
+    },
+    {   login: 'AB9',
+        password: '', ////пустой
+        errorText: 'Password is required'
+    },
+    {   login: '', //пустой
+        password: '', //пустой,
+        errorText: 'Please, provide valid data'
+    }
+    
 ];
