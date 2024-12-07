@@ -4,22 +4,20 @@
 //  - проверить исчезновение ВСЕХ спиннеров с помощью waitUntil метода
 //  - проверить действительно ли пользователь с логином AQA User вошел в систему
 
-import { login, password } from "../data/credentials";
-import { buttonSubmit, emailInput, passwordInput, spinners } from "../data/selectors";
+import { creds } from "../data/credentials";
+import { buttonSubmit, emailInput, passwordInput, spinners, nameSelector } from "../data/selectors";
 
 
 describe("Destroy all spinners", async function () {
     before(async function () {
         await browser.maximizeWindow();
+        await browser.url("https://anatoly-karpovich.github.io/aqa-course-project/#");
       });
 
-    beforeEach(async function () {
-      await browser.url("https://anatoly-karpovich.github.io/aqa-course-project/#");
-    });
 
-    it("Should wait while all spiners will vanish", async function () {
-        await $(emailInput).setValue(login);
-        await $(passwordInput).setValue(password);
+    it("Should login with correct creds and wait while all spiners will vanish", async function () {
+        await $(emailInput).setValue(creds.login);
+        await $(passwordInput).setValue(creds.password);
         await $(buttonSubmit).click();
         await browser.waitUntil(
             async () => {
@@ -35,7 +33,8 @@ describe("Destroy all spinners", async function () {
               interval: 500,
             }
           );
+          const actualText = await $(nameSelector).getText();
+          expect(actualText).toContain(creds.name); 
       });
-
   
 });

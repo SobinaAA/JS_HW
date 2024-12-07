@@ -1,2 +1,5 @@
-export const login = 'aqacourse@gmail.com';
-export const password = 'password';
+export const creds = {
+    login: 'aqacourse@gmail.com',
+    password: 'password',
+    name: 'AQA User'
+}
