@@ -24,7 +24,7 @@ class ProductsPage extends SalesPortalPage {
     await this.waitForSpinnersToBeHidden("Products");
   }
 
-  async getNFromTheTable(n: number) {
+  private async getProductTable()  {
     const tableData: Partial <IProduct>[] = [];
     const rows = await $$(`${this.Table} tbody tr`).getElements();
     await rows.forEach(async (row) => {
@@ -38,24 +38,17 @@ class ProductsPage extends SalesPortalPage {
       }, {} as Record<string, string>);
       tableData.push(rowObject);
     });
-    return tableData[n];    
+    return tableData;
+  }
+
+  async getNFromTheTable(n: number) {
+    const table = await this.getProductTable();
+    return table[n];    
   }
 
   async searchInTheTable(s: string) {
-    const tableData: Partial <IProduct>[] = [];
-    const rows = await $$(`${this.Table} tbody tr`).getElements();
-    await rows.forEach(async (row) => {
-      const cells = await row.$$("td").getElements();
-      cells.pop();
-      cells.pop();
-      const cellsTexts = await cells.map(async (cell) => await cell.getText());
-      const rowObject = this.tHeaders.reduce((obj, header, i) => {
-        obj[header] = cellsTexts[i];
-        return obj;
-      }, {} as Record<string, string>);
-      tableData.push(rowObject);
-    });
-    return tableData.findIndex(obj => obj.name === s);
+    const table = await this.getProductTable();
+    return table.findIndex(obj => obj.name === s);
   }
 
   async deleteNProduct(n: number) {
