@@ -31,13 +31,7 @@ class ProductsPageService extends SalesPortalPageService {
     await this.productsPage.clickOnDetailsProductButton(product.name);
     await this.productsPage["Details Modal"].waitForPageOpened();
     const expectedProductData = _.pick(product, ["name", "price", "amount", "manufacturer", "notes"]);
-    const actualProductData = {
-      name: await $(this.productsPage["Details Modal"]["Name Field"]).getText(),
-      amount: Number(await $(this.productsPage["Details Modal"]["Amount Field"]).getText()),
-      price: Number(await $(this.productsPage["Details Modal"]["Price Field"]).getText()),
-      manufacturer: await $(this.productsPage["Details Modal"]["Manufacturer Field"]).getText(),
-      notes: await $(this.productsPage["Details Modal"]["Notes Field"]).getText()
-    }; 
+    const actualProductData = await this.productsPage["Details Modal"].getActualProductData();
     expect(actualProductData).toEqual(expectedProductData);
     await this.productsPage["Details Modal"].clickOnCloseButton();
   }
@@ -46,9 +40,12 @@ class ProductsPageService extends SalesPortalPageService {
     await this.productsPage.fillSearchField(text);
     await this.productsPage.clickSearchButton();
     await this.productsPage.waitForSpinnersToBeHidden("productsPage");
-    const rows = await this.productsPage.findArrayOfElements(this.productsPage["Table Rows"]);
-    const len = rows.length;
-    expect (len).toBe(1);
+  }
+
+  async checkResultOfSearch(n: number) {
+  const rows = await this.productsPage.findArrayOfElements(this.productsPage["Table Rows"]);
+  const len = rows.length;
+  expect (len).toBe(n);
   }
 
 }

@@ -57,6 +57,7 @@ it("Should create new product", async function () {
     await productsPageService.validateNotification(NOFITICATIONS.PRODUCT_CREATED);
     await productsPageService.checkProductInDetails(newProductData);
     await productsPageService.searchProduct(newProductData.name);
+    await productsPageService.checkResultOfSearch(1);
     await productsPageService.checkProductInTable(newProductData);
   });
 

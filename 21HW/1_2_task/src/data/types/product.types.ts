@@ -16,5 +16,3 @@ export enum MANUFACTURERS {
   AMAZON = "Amazon",
   TESLA = "Tesla",
 }
-
-export type keys = keyof IProduct;
