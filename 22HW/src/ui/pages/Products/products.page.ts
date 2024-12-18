@@ -2,6 +2,7 @@ import { SalesPortalPage } from "../salesPortal.page";
 import deleteProductModal from "./deleteProduct.modal";
 import detailsProductModal from "./details.modal";
 
+
 class ProductsPage extends SalesPortalPage {
   private ["Details Modal"] = detailsProductModal;
   readonly ["Delete Modal"] = deleteProductModal;

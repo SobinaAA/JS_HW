@@ -1,4 +1,5 @@
 import { GetTextMethod } from "../../data/types/base.types";
+import { logStep } from "../../utils/reporter/decorators";
 import signinPage from "../pages/signin.page";
 
 export abstract class SalesPortalPageService {
@@ -8,7 +9,8 @@ export abstract class SalesPortalPageService {
     expect(notification).toBe(text);
     this.basePage.closeNotificationByText(text);
   }
-
+  
+@logStep("Log out")
   async signOut() {
     await this.basePage.deleteCookies(["Authorization"]);
   }

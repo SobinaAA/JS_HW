@@ -1,4 +1,5 @@
-import { ICredentials } from "../../data/credentials";
+import { SALES_PORTAL_URL } from "../../config/environment";
+import { ICredentials } from "../../data/types/signIn.types";
 import { SalesPortalPage } from "./salesPortal.page";
 
 
@@ -8,10 +9,10 @@ class SignInPage extends SalesPortalPage {
     readonly ButtonSubmit = 'button[type="submit"]';
     readonly Title = "p.lead";
   
-  async fillCredentials(creds: ICredentials) {
-    await this.setValue(this.EmailInput, creds.email);
-    await this.setValue(this.PasswordInput, creds.password);
-  }
+    async fillCredentials(credentials: ICredentials) {
+      await this.setValue(this.EmailInput, credentials.email);
+      await this.setValue(this.PasswordInput, credentials.password);
+    }
 
   async clickOnSubmitButton() {
     await this.click(this.ButtonSubmit);
@@ -22,7 +23,7 @@ class SignInPage extends SalesPortalPage {
   }
 
   async open() {
-    await this.openPage("https://anatoly-karpovich.github.io/aqa-course-project/");
+    await this.openPage(SALES_PORTAL_URL);
   }
 }
 
