@@ -9,7 +9,7 @@ class AddNewProductService extends SalesPortalPageService {
   private productsPage = productsPage;
 
   @logStep("Fill all fields to create new prodact and submit")
-  async fillAndSubmit(product: IProduct) {
+  async creare(product: IProduct) {
     await this.addNewProductPage.fillInputs(product);
     await this.addNewProductPage.clickOnSaveButton();
     await this.productsPage.waitForPageOpened();

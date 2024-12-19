@@ -3,7 +3,7 @@ import { IProduct } from "../../../data/types/product.types";
 import addNewProductPage from "../../pages/Products/addNewProduct.page";
 import productsPage from "../../pages/Products/products.page";
 import { SalesPortalPageService } from "../salesPortalPage.service";
-import { direction, sortMethod } from "../../../data/types/sorting.types";
+import { direction, ISort, sortMethod } from "../../../data/types/sorting.types";
 import { logStep } from "../../../utils/reporter/decorators";
 
 class ProductsPageService extends SalesPortalPageService {
@@ -56,30 +56,38 @@ class ProductsPageService extends SalesPortalPageService {
   expect (len).toBe(n);
   }
 
-  @logStep("Sort by {text}")
-  async sortBy(method: sortMethod) {
-    await this.productsPage.clickOnTableHeader(method);
+  @logStep("Sort")
+  async sortBy(method: sortMethod, dir: direction) {
+    let actualSort = await this.productsPage.toKnowSortingFieldAndDirection();
+    
+    const toDoSort: ISort = {
+      field: method,
+      direction: dir
+    };
+      while (toDoSort.field !== actualSort.field || toDoSort.direction !== actualSort.direction) {
+        await this.productsPage.clickOnTableHeader(method);
+        actualSort = await this.productsPage.toKnowSortingFieldAndDirection();
+      }
     }  
 
     @logStep("Check Sorting")
     async checkSorting(field: sortMethod, dir: direction) {
       const table = await this.productsPage.getProductTable() as Record<string, string>[];
       let mySortedTable: Record<string, string>[];
-      switch (field) {
-        case "Name":
-          mySortedTable = dir === "ASC"? table.sort((prod1, prod2) => prod1['name'].localeCompare(prod2['name'])): table.sort((prod1, prod2) => prod2['name'].localeCompare(prod1['name']))
-          break;
-        case "Price":
-          mySortedTable = dir === "ASC"? table.sort((prod1, prod2) => +prod1['price'] - +prod2['price']): table.sort((prod1, prod2) => +prod2['price'] - +prod1['price']);
-          break;
-        case "Created On":
-          mySortedTable = dir === "ASC"? table.sort((prod1, prod2) => Date.parse(prod1['price']) - Date.parse(prod2['price'])): table.sort((prod1, prod2) => Date.parse(prod2['price']) - Date.parse(prod1['price']));
-          break;
-        default:
-          throw new Error("Другие методы пока не реализованы!")
-      }
-      const check = _.isEqual(table, mySortedTable);
-      expect (check).toBe(true);
+          switch (field) {
+            case "Name":
+              mySortedTable = dir === "ASC"? table.sort((prod1, prod2) => prod1['name'].localeCompare(prod2['name'])): table.sort((prod1, prod2) => prod2['name'].localeCompare(prod1['name']))
+              break;
+            case "Price":
+              mySortedTable = dir === "ASC"? table.sort((prod1, prod2) => +prod1['price'] - +prod2['price']): table.sort((prod1, prod2) => +prod2['price'] - +prod1['price']);
+              break;
+            case "Created On":
+              mySortedTable = dir === "ASC"? table.sort((prod1, prod2) => Date.parse(prod1['price']) - Date.parse(prod2['price'])): table.sort((prod1, prod2) => Date.parse(prod2['price']) - Date.parse(prod1['price']));
+              break;
+            default:
+              throw new Error("Другие методы пока не реализованы!")
+          }
+      expect (mySortedTable).toMatchObject(table);
     }
 
 }
