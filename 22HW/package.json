@@ -2,7 +2,9 @@
   "name": "aqa-wdio-3",
   "type": "module",
   "devDependencies": {
+    "@types/chai": "^5.0.1",
     "@types/dotenv": "^6.1.1",
+    "@types/faker": "^6.6.8",
     "@types/lodash": "^4.17.13",
     "@types/rimraf": "^3.0.2",
     "@wdio/allure-reporter": "^9.2.14",
@@ -22,8 +24,11 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@faker-js/faker": "^9.3.0",
     "allure-commandline": "^2.32.0",
+    "chai": "^5.1.2",
     "dotenv": "^16.4.7",
+    "faker": "^6.6.6",
     "lodash": "^4.17.21",
     "rimraf": "^6.0.1"
   }

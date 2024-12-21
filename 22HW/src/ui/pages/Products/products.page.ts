@@ -25,8 +25,8 @@ class ProductsPage extends SalesPortalPage {
   readonly ["Sort by Value"] = (Value: string) => `//div[.="${Value}"]`;
   readonly Table = "#table-products";
   readonly tHeaders = ['name', 'price', 'manufacturer', 'created on'];
-  readonly arrowSelector = "i[contains(@class, 'arrow')]";
-  readonly fieldWithArrow = `//div[./${this.arrowSelector}]/preceding-sibling::div`
+
+  readonly sortingField = '//div[@direction]';
  
 
   async clickOnAddNewProduct() {
@@ -88,15 +88,13 @@ class ProductsPage extends SalesPortalPage {
   }
 
   async toKnowSortingFieldAndDirection() {
-    const arrow = await this.findElement("//" + this.arrowSelector);
-    const arrowClass = await arrow.getAttribute('class');
-    const direction: direction = arrowClass.includes('up')? 'DESC': 'ASC';
-    const sortField: sortMethod = await this.getText(this.fieldWithArrow) as sortMethod;
+    const field = await this.findElement(this.sortingField);
+    const direction = await field.getAttribute('direction') as 'asc' | 'desc';
+    const sortField: sortMethod = await this.getText(field) as sortMethod;  //! Ok
     const objSort: ISort = {
       field: sortField,
       direction: direction
     };
-    console.log(objSort);
     return objSort
   }
 
@@ -105,13 +103,13 @@ class ProductsPage extends SalesPortalPage {
     let mySortedTable: Record<string, string>[];
     switch (field) {
       case "Name":
-        mySortedTable = dir === "ASC"? table.sort((prod1, prod2) => prod1['name'].localeCompare(prod2['name'])): table.sort((prod1, prod2) => prod2['name'].localeCompare(prod1['name']))
+        mySortedTable = dir === "asc"? table.sort((prod1, prod2) => prod1['name'].localeCompare(prod2['name'])): table.sort((prod1, prod2) => prod2['name'].localeCompare(prod1['name']))
         break;
       case "Price":
-        mySortedTable = dir === "ASC"? table.sort((prod1, prod2) => +prod1['price'] - +prod2['price']): table.sort((prod1, prod2) => +prod2['price'] - +prod1['price']);
+        mySortedTable = dir === "asc"? table.sort((prod1, prod2) => +prod1['price'] - +prod2['price']): table.sort((prod1, prod2) => +prod2['price'] - +prod1['price']);
         break;
       case "Created On":
-        mySortedTable = dir === "ASC"? table.sort((prod1, prod2) => Date.parse(prod1['price']) - Date.parse(prod2['price'])): table.sort((prod1, prod2) => Date.parse(prod2['price']) - Date.parse(prod1['price']));
+        mySortedTable = dir === "asc"? table.sort((prod1, prod2) => Date.parse(prod1['price']) - Date.parse(prod2['price'])): table.sort((prod1, prod2) => Date.parse(prod2['price']) - Date.parse(prod1['price']));
         break;
       default:
         throw new Error("Другие методы пока не реализованы!")

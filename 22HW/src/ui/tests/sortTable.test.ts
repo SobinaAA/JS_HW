@@ -12,38 +12,38 @@ describe("[UI] [Tables sorting: name, price, date]", () => {
 
   it("Should sort ASC by Name", async function () {
     await homePageService.openProductsPage();
-    await productsPageService.sortBy("Name", "ASC");
-    await productsPageService.checkSorting("Name", "ASC");
+    await productsPageService.sortBy("Name", "asc");
+    await productsPageService.checkSorting("Name", "asc");
   });
 
   it("Should sort DESC by Name", async function () {
     await homePageService.openProductsPage();
-    await productsPageService.sortBy("Name", "DESC");
-    await productsPageService.checkSorting("Name", "DESC"); 
+    await productsPageService.sortBy("Name", "desc");
+    await productsPageService.checkSorting("Name", "desc"); 
   });
 
   it("Should sort ASC by Price", async function () {
     await homePageService.openProductsPage();
-    await productsPageService.sortBy("Price", "ASC");
-    await productsPageService.checkSorting("Price", "ASC");
+    await productsPageService.sortBy("Price", "asc");
+    await productsPageService.checkSorting("Price", "asc");
   });
 
   it("Should sort Desc by Price", async function () {
     await homePageService.openProductsPage();
-    await productsPageService.sortBy("Price", "DESC");
-    await productsPageService.checkSorting("Price", "DESC");
+    await productsPageService.sortBy("Price", "desc");
+    await productsPageService.checkSorting("Price", "desc");
   });
 
   it("Should sort ASC by Date", async function () {
     await homePageService.openProductsPage();
-    await productsPageService.sortBy("Created On", "ASC");
-    await productsPageService.checkSorting("Created On", "ASC");
+    await productsPageService.sortBy("Created On", "asc");
+    await productsPageService.checkSorting("Created On", "asc");
   });
 
   it("Should sort DESC by Date", async function () {
     await homePageService.openProductsPage();
-    await productsPageService.sortBy("Created On", "DESC");
-    await productsPageService.checkSorting("Created On", "DESC");
+    await productsPageService.sortBy("Created On", "desc");
+    await productsPageService.checkSorting("Created On", "desc");
   });
 
   afterEach(async () => {
