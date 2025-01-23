@@ -1,0 +1,32 @@
+{
+  "name": "aqa-pw-3",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:api": "npm run test -- --project=api",
+    "report-html": "npx playwright show-report",
+    "ui-mode": "npx playwright test --ui"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/lodash": "^4.17.14",
+    "@types/node": "^22.10.6",
+    "@types/numeral": "^2.0.5"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^9.3.0",
+    "@types/ajv": "^0.0.5",
+    "@types/chai": "^5.0.1",
+    "@types/dotenv": "^6.1.1",
+    "ajv": "^8.17.1",
+    "chai": "^5.1.2",
+    "dotenv": "^16.4.7",
+    "lodash": "^4.17.21",
+    "numeral": "^2.0.6"
+  }
+}
